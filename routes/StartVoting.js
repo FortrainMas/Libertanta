@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { View, StyleSheet, Text, TextInput, AsyncStorage } from 'react-native';
+import { View, StyleSheet, Text, TextInput, AsyncStorage, Image } from 'react-native';
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import { vw,vh } from 'react-native-expo-viewport-units';
 import { Bars} from 'react-native-loader';
@@ -57,7 +57,7 @@ export default class StartVoting extends Component{
             console.log(json)
             if(json.err == "You have not got persmision"){
                 this.setState({status: 'no permision'})
-            }else if(json.err){
+            }else if(json.err == "Voting is going now"){
                 this.setState({status: 'already'});
             }else{
                 this.setState({
@@ -89,24 +89,20 @@ export default class StartVoting extends Component{
             )
         }else if(this.state.status == "no permision"){
             return(
-                <View style = {{justifyContent: 'center', alignItems:'center'}}>
-                    <View>
-                        <Image source = {require('../assets/Cross.png')} style = {{height: 200, width: 200, marginVertical: 100}}/>
-                        <Text style = {{fontSize: 14}}>You are not authorized to do this.</Text>
-                    </View>
+                <View style={{justifyContent: 'center', alignItems:'center', height: vh(80)}}>
+                    <Text style = {{fontSize: 25, textAlign:'center'}}>You are not authorized to do this.</Text>
                 </View>
             )
         }else if(this.state.status == "already"){
-            <View style = {{justifyContent: 'center', alignItems:'center'}}>
-                <View>
-                    <Image source = {require('../assets/Cross.png')} style = {{height: 200, width: 200, marginVertical: 100}}/>
-                    <Text style = {{fontSize: 14}}>Voting is already going, you can not stop it now</Text>
+            return(
+                <View style={{justifyContent: 'center', alignItems:'center', height: vh(80)}}>
+                    <Text style = {{fontSize: 25, textAlign:'center'}}>Voting is already going, you can not stop it now</Text>
                 </View>
-            </View>
+            )
         }else if(this.state.status == "success"){
             return(
-                <View>
-                    <Text>Success</Text>
+                <View style={{justifyContent: 'center', alignItems:'center', height: vh(80)}}>
+                    <Text style = {{fontSize: 25, textAlign:'center'}}>Success</Text>
                 </View>
             )
         }
